@@ -36,12 +36,12 @@ Step 7: Finally, to analyze and improve the segmentation's result we avoid some 
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import shutil
 import glob
 import csv
+import matplotlib.pyplot as plt
 from scipy.spatial import ConvexHull
 from skimage import measure
 from PIL import Image, ImageDraw
@@ -139,11 +139,11 @@ def createMaskFromPolygon(image, contours):
 
     return lungMask.T
 
+
+
 def saveNifty(image, name, affine):
     image[image == 1] = 255
-    ni_img = nib.Nifti1Image(image, affine)
-    nib.save(ni-+_img, name + '.nii.gz')
-
+    nib.save(nib.Nifti1Image(image, affine), name + '.nii.gz')
 
 def findPixelDimension(CTImage):
     pixelDimension = CTImage.header["pixdim"]
@@ -227,7 +227,7 @@ def euclidean_dist(dx, dy):
     return np.sqrt(np.power(dx, 2) + np.power(dy, 2))
 
 def create_vessel_mask(lung_mask, ct_numpy, denoise=False):
-    vessels = lung_mask * ct_numpy 
+        vessels = lung_mask * ct_numpy 
     vessels[vessels == 0] = -1000
     vessels[vessels >= -500] = 1
     vessels[vessels < -500] = 0
@@ -236,12 +236,12 @@ def create_vessel_mask(lung_mask, ct_numpy, denoise=False):
     if denoise:
       vessels_coords_x, vessels_coords_y = np.nonzero(vessels)  
       for contour in lungs_contour:
-          x_points, y_points = contour[:, 0], contour[:, 1]
-          for (coord_x, coord_y) in zip(vessels_coords_x, vessels_coords_y):
-              for (x, y) in zip(x_points, y_points):
-                  d = euclidean_dist(x - coord_x, y - coord_y)
+          xPoints, yPoints = contour[:, 0], contour[:, 1]
+          for (Xcoordinate, Ycoordinate) in zip(vessels_coords_x, vessels_coords_y):
+              for (x, y) in zip(xPoints, yPoints):
+                  d = euclideanDistance(x - Xcoordinate, y - Ycoordinate)
                   if d <= 0.1:
-                      vessels[coord_x, coord_y] = 0
+                      vessels[Xcoordinate, Ycoordinate] = 0
       return vessels
     plt.figure()
     plt.imshow(vessels.T, cmap="gray", origin="lower")
