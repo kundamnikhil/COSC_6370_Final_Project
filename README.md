@@ -1,5 +1,4 @@
 # CT Lungs and Vessels Segmentation and Cancer Detection
-Sure, here's the formatted text:
 
 # Abstract
 
